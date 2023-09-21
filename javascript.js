@@ -313,7 +313,7 @@ function kittyAnimation(){
     animationContainer.style.zIndex = "2";
     animation.style.animationPlayState= "running";
     animation.addEventListener("animationend", () => {
-        animationContainer.style.zIndex = "null";
+        animationContainer.removeAttribute('class');
         kittyImage.style.display = 'none';
     }) 
 }
