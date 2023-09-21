@@ -40,14 +40,26 @@ function playRound(playerSelection, computerSelection) {
     itemSelection.style.fontStyle = "italic";
     itemSelection.style.fontWeight = "800";
     mainHeaderContainer.appendChild(itemSelection);
+    usrScore.textContent = `Your score: ${playerScore}`;
+    if(currentRound < 5){
+        curRound.textContent = `ROUND ${currentRound}`;
+    }
+    else if(currentRound == 5){
+        curRound.textContent= 'FINAL ROUND!';
+    }
+    compScore.textContent = `Computer score: ${computerScore}`;
+    curRound.style.alignSelf = 'center';
+    userScoreContainer.appendChild(usrScore);
+    curRoundContainer.appendChild(curRound);
+    compScoreContainer.appendChild(compScore);
     if (playerSelection == 'rock') {
         if (computerSelection == 'scissors'){
             playerScore++;
-            roundOutcome = (`You win! ${playerSelection} Beats ${computerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`);
+            roundOutcome = (`You win! ${playerSelection} beats ${computerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`);
         }
         else if (computerSelection == 'paper') {
             computerScore++;
-            roundOutcome = (`You lose! ${computerSelection} Beats ${playerSelection}. Score: Player: ${playerScore} | Computer: ${computerScore}`)
+            roundOutcome = (`You lose! ${computerSelection} beats ${playerSelection}. Score: Player: ${playerScore} | Computer: ${computerScore}`)
         }
         else {
             roundOutcome = (`It's a tie! Both chose ${playerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`)
@@ -56,11 +68,11 @@ function playRound(playerSelection, computerSelection) {
     else if (playerSelection == 'paper') {
         if (computerSelection == 'rock'){
             playerScore++;
-            roundOutcome = (`You win! ${playerSelection} Beats ${computerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`);
+            roundOutcome = (`You win! ${playerSelection} beats ${computerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`);
         }
         else if (computerSelection == 'scissors') {
             computerScore++;
-            roundOutcome = (`You lose! ${computerSelection} Beats ${playerSelection}. Score: Player: ${playerScore} | Computer: ${computerScore}`)
+            roundOutcome = (`You lose! ${computerSelection} beats ${playerSelection}. Score: Player: ${playerScore} | Computer: ${computerScore}`)
         }
         else {
             roundOutcome = (`It's a tie! Both chose ${playerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`)
@@ -70,11 +82,11 @@ function playRound(playerSelection, computerSelection) {
     else {
         if (computerSelection == 'paper'){
             playerScore++;
-            roundOutcome = (`You win! ${playerSelection} Beats ${computerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`);
+            roundOutcome = (`You win! ${playerSelection} beats ${computerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`);
         }
         else if (computerSelection == 'rock') {
             computerScore++;
-            roundOutcome = (`You lose! ${computerSelection} Beats ${playerSelection}. Score: Player: ${playerScore} | Computer: ${computerScore}`)
+            roundOutcome = (`You lose! ${computerSelection} beats ${playerSelection}. Score: Player: ${playerScore} | Computer: ${computerScore}`)
         }
         else {
             roundOutcome = (`It's a tie! Both chose ${playerSelection}! Score: Player: ${playerScore} | Computer: ${computerScore}`)
@@ -84,13 +96,18 @@ function playRound(playerSelection, computerSelection) {
     compGuessMsg();
     setTimeout(() => {
         roundOutput(roundOutcome);
-    }, 6000);
+    }, 3500);
     
-    
-    setTimeout(() => {
-        newRound();
-    }, 7000);
-    
+    if (currentRound < 5){
+        setTimeout(() => {
+            newRound();
+        }, 3500);
+    }
+    else if (currentRound >= 5){
+        setTimeout(() => {
+            gameEnd();
+        }, 3500);
+    }   
 }
 
 // create function called game() use playRound inside of this function to play 5 round game, keep score and report winner at end
@@ -123,6 +140,11 @@ function playRound(playerSelection, computerSelection) {
     let styleChoice = "";
     let toggle = true;
     let nR = true;
+    let currentRound = 1;
+    const usrScore = document.createElement('h4');
+    const curRound = document.createElement('h1');
+    const compScore = document.createElement('h4');
+    curRound.style.textDecoration = 'underline';
     if (selected == false){
         styleChoice = 'selected';
     }
@@ -132,6 +154,10 @@ function playRound(playerSelection, computerSelection) {
     const mainHeaderContainer = document.querySelector('.mainHeader');
     const mainHeader = document.createElement('h1');
     const itemSelection = document.createElement('h2');
+    const topHeaderContainer = document.querySelector('.topHeader');
+    const userScoreContainer = document.querySelector('.userScore');
+    const curRoundContainer = document.querySelector('.round');
+    const compScoreContainer = document.querySelector('.compScore');
     mainHeader.textContent = "CHOOSE YOUR FIGHTER!!!";
 
 function game(){
@@ -213,7 +239,7 @@ const btmContainer = document.querySelector(".bottom");
 function newRound() {
     const nrButton = document.createElement("button");
     const buttonContainer = document.querySelector('.bottom');
-    nrButton.textContent = "Next Round :D";
+    nrButton.textContent = "Next Round 😸";
     buttonContainer.appendChild(nrButton);
     nrButton.addEventListener('click', () => {
         mainHeaderContainer.removeChild(itemSelection);
@@ -232,8 +258,15 @@ function newRound() {
         }
         buttonContainer.removeChild(nrButton);
         outcomeContainer.removeChild(roundOutcomeText);
-        game();
-        
+        currentRound++;
+        if(currentRound < 5){
+            curRound.textContent = `ROUND ${currentRound}`;
+            game();
+        }
+        else if(currentRound == 5){
+            curRound.textContent= 'FINAL ROUND!';
+            game ();
+        }
     })
     
     
@@ -243,6 +276,8 @@ const roundOutcomeText = document.createElement('h1');
 const outcomeContainer = document.querySelector('.roundOutcome');
 
 function roundOutput(text) {
+    usrScore.textContent = `Your score: ${playerScore}`;
+    compScore.textContent = `Computer score: ${computerScore}`;
     roundOutcomeText.textContent = text;
     outcomeContainer.appendChild(roundOutcomeText);
 }
@@ -263,12 +298,34 @@ function compGuessMsg() {
         if (count % 3 == 0) {
             loading = "";
         }
-        if (count > 23) {
+        if (count > 13) {
             msgContainer.removeChild(msg);
             myStopFunction();
             return('done');
         }  
     }
 }
-
+function gameEnd(){
+    itemSelection.style.backgroundColor = 'rgba(88, 210, 210, 0.813)';
+    itemSelection.style.padding = '1vw';
+    itemSelection.style.margin = '1vh';
+    itemSelection.style.borderRadius = "10px";
+    if (playerScore > computerScore) {
+        itemSelection.textContent = `You won the game!! Final results: Player: ${playerScore} | Computer: ${computerScore}`;
+    }
+    else if (playerScore < computerScore) {
+        itemSelection.textContent = `You lost the game! Better luck next time! Final results: Player: ${playerScore} | Computer: ${computerScore}`;
+    }
+    else {
+        itemSelection.textContent = `It's a tie!! Final results: Player: ${playerScore} | Computer: ${computerScore}`;
+    }
+    
+    const ngButton = document.createElement("button");
+    const buttonContainer = document.querySelector('.bottom');
+    ngButton.textContent = "Play again?";
+    buttonContainer.appendChild(ngButton);
+    ngButton.addEventListener('click', () => {
+        location.reload()
+    })
+}
 game();
