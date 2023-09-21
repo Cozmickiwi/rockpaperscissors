@@ -109,56 +109,33 @@ function playRound(playerSelection, computerSelection) {
         }, 3500);
     }   
 }
-
-// create function called game() use playRound inside of this function to play 5 round game, keep score and report winner at end
-/*function game() {
-    let round = 1;
-    while (round < 6) {
-        console.log(`Round ${round} of 5:`);
-        ///let playerSelection = playerDecision();
-        let computerSelection = getComputerChoice();
-        playRound(playerSelection, computerSelection);
-        console.log(roundOutcome);
-        round++;
-    }
-    if (playerScore > computerScore) {
-        return(`You won the game!! Final results: Player: ${playerScore} | Computer: ${computerScore}`);
-    }
-    else if (playerScore < computerScore) {
-        return(`You lost the game! Better luck next time! Final results: Player: ${playerScore} | Computer: ${computerScore}`);
-    }
-    else {
-        return(`It's a tie!! Final results: Player: ${playerScore} | Computer: ${computerScore}`);
-    }
-} */
-//function start() {
-    let rock = document.querySelector(".rock");
-    let paper = document.querySelector(".paper");
-    let scissors = document.querySelector(".scissors");
-    let img = document.querySelectorAll("img");
-    let imgSelection = "";
-    let styleChoice = "";
-    let toggle = true;
-    let nR = true;
-    let currentRound = 1;
-    const usrScore = document.createElement('h4');
-    const curRound = document.createElement('h1');
-    const compScore = document.createElement('h4');
-    curRound.style.textDecoration = 'underline';
-    if (selected == false){
-        styleChoice = 'selected';
-    }
-    else{
-        styleChoice = 'img';
-    }
-    const mainHeaderContainer = document.querySelector('.mainHeader');
-    const mainHeader = document.createElement('h1');
-    const itemSelection = document.createElement('h2');
-    const topHeaderContainer = document.querySelector('.topHeader');
-    const userScoreContainer = document.querySelector('.userScore');
-    const curRoundContainer = document.querySelector('.round');
-    const compScoreContainer = document.querySelector('.compScore');
-    mainHeader.textContent = "CHOOSE YOUR FIGHTER!!!";
+let rock = document.querySelector(".rock");
+let paper = document.querySelector(".paper");
+let scissors = document.querySelector(".scissors");
+let img = document.querySelectorAll("img");
+let imgSelection = "";
+let styleChoice = "";
+let toggle = true;
+let nR = true;
+let currentRound = 1;
+const usrScore = document.createElement('h4');
+const curRound = document.createElement('h1');
+const compScore = document.createElement('h4');
+curRound.style.textDecoration = 'underline';
+if (selected == false){
+    styleChoice = 'selected';
+}
+else{
+    styleChoice = 'img';
+}
+const mainHeaderContainer = document.querySelector('.mainHeader');
+const mainHeader = document.createElement('h1');
+const itemSelection = document.createElement('h2');
+const topHeaderContainer = document.querySelector('.topHeader');
+const userScoreContainer = document.querySelector('.userScore');
+const curRoundContainer = document.querySelector('.round');
+const compScoreContainer = document.querySelector('.compScore');
+mainHeader.textContent = "CHOOSE YOUR FIGHTER!!!";
 
 function game(){
     mainHeaderContainer.appendChild(mainHeader);
@@ -331,11 +308,12 @@ function gameEnd(){
     })
 }
 let kittyImage = document.getElementById('image');
-//let animation = document.getElementById('animation');
-    //animation.style.display = "fixed";
+
 function kittyAnimation(){
+    animationContainer.style.zIndex = "2";
     animation.style.animationPlayState= "running";
     animation.addEventListener("animationend", () => {
+        animationContainer.style.zIndex = "null";
         kittyImage.style.display = 'none';
     }) 
 }
