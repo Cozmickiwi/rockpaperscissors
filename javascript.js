@@ -283,6 +283,7 @@ function roundOutput(text) {
 }
 let loading = "";
 function compGuessMsg() {
+    loading = "";
     let msgContainer = document.querySelector(".compGuessMsg");
     let msg = document.createElement("h2");
     let count = 0;
@@ -312,6 +313,7 @@ function gameEnd(){
     itemSelection.style.borderRadius = "10px";
     if (playerScore > computerScore) {
         itemSelection.textContent = `You won the game!! Final results: Player: ${playerScore} | Computer: ${computerScore}`;
+        kittyAnimation();
     }
     else if (playerScore < computerScore) {
         itemSelection.textContent = `You lost the game! Better luck next time! Final results: Player: ${playerScore} | Computer: ${computerScore}`;
@@ -328,4 +330,14 @@ function gameEnd(){
         location.reload()
     })
 }
+let kittyImage = document.getElementById('image');
+//let animation = document.getElementById('animation');
+    //animation.style.display = "fixed";
+function kittyAnimation(){
+    animation.style.animationPlayState= "running";
+    animation.addEventListener("animationend", () => {
+        kittyImage.style.display = 'none';
+    }) 
+}
+
 game();
