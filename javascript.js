@@ -339,5 +339,4 @@ function kittyAnimation(){
         kittyImage.style.display = 'none';
     }) 
 }
-kittyAnimation();
 game();
