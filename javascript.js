@@ -36,6 +36,10 @@ function getComputerChoice() {
 // function should take two parameters, playerSelection and computerSelection
 // use if...else statements to determine winner, then return string based on outcome
 function playRound(playerSelection, computerSelection) {
+    itemSelection.textContent = `You chose ${playerSelection}!`;
+    itemSelection.style.fontStyle = "italic";
+    itemSelection.style.fontWeight = "800";
+    mainHeaderContainer.appendChild(itemSelection);
     if (playerSelection == 'rock') {
         if (computerSelection == 'scissors'){
             playerScore++;
@@ -118,42 +122,72 @@ function playRound(playerSelection, computerSelection) {
     let imgSelection = "";
     let styleChoice = "";
     let toggle = true;
+    let nR = true;
     if (selected == false){
         styleChoice = 'selected';
     }
     else{
         styleChoice = 'img';
     }
-    rock.addEventListener('mousedown', () => {
-        imgSelection = 'rock';
-        toggle = true
-        choiceMade();
-    })
+    const mainHeaderContainer = document.querySelector('.mainHeader');
+    const mainHeader = document.createElement('h1');
+    const itemSelection = document.createElement('h2');
+    mainHeader.textContent = "CHOOSE YOUR FIGHTER!!!";
+
+function game(){
+    mainHeaderContainer.appendChild(mainHeader);
+    function rockEventListener() {
+        if (nR == true){
+            imgSelection = 'rock';
+            toggle = true
+            nR = false
+            rock.removeEventListener('mousedown', rockEventListener)
+            choiceMade();
+        }
+    }
+    function paperEventListener() {
+        if (nR == true){
+            imgSelection = 'paper';
+            toggle = true
+            nR = false
+            paper.removeEventListener('mousedown', paperEventListener)
+            choiceMade();
+        }
+    }
+    function scissorsEventListener() {
+        if (nR == true){
+            imgSelection = 'scissors';
+            toggle = true
+            nR = false
+            scissors.removeEventListener('mousedown', scissorsEventListener)
+            choiceMade();
+        }
+    }
+    if(nR == true){
+    rock.addEventListener('mousedown', rockEventListener)
+    }
     rock.addEventListener("transitionend", () => {
         rock.classList.remove('playing');
         rock.classList.toggle('selected', toggle);
     })
-    paper.addEventListener('mousedown', () => {
-        imgSelection = 'paper';
-        toggle = true
-        choiceMade();
-    })
+    if(nR == true){
+    paper.addEventListener('mousedown', paperEventListener)
+    }
     paper.addEventListener("transitionend", () => {
         paper.classList.remove('playing');
-        paper.classList.toggle('selected', toggle);
+        paper.classList.toggle('selected', toggle);       
     })
-    scissors.addEventListener('mousedown', () => {
-        toggle = true
-        imgSelection = 'scissors';
-        choiceMade();
-    })
+    if(nR == true){
+    scissors.addEventListener('mousedown', scissorsEventListener)
+    }
     scissors.addEventListener("transitionend", () => {
         scissors.classList.remove('playing');
-        scissors.classList.toggle('selected', toggle);
+        scissors.classList.toggle('selected', toggle);        
     })
         function choiceMade () {
             if (selected == false) {
-                computerSelection=  getComputerChoice();
+                mainHeaderContainer.removeChild(mainHeader);
+                computerSelection = getComputerChoice();
                 if (imgSelection == 'rock'){
                     selected = true;
                     rock.classList.add('playing');
@@ -174,7 +208,7 @@ function playRound(playerSelection, computerSelection) {
                 }
             }
         }
-
+    }
 const btmContainer = document.querySelector(".bottom");        
 function newRound() {
     const nrButton = document.createElement("button");
@@ -182,7 +216,10 @@ function newRound() {
     nrButton.textContent = "Next Round :D";
     buttonContainer.appendChild(nrButton);
     nrButton.addEventListener('click', () => {
+        mainHeaderContainer.removeChild(itemSelection);
         toggle = false;
+        selected = false;
+        nR = true;
         if (imgSelection == 'rock'){
             rock.classList.remove('selected');
         }
@@ -195,10 +232,11 @@ function newRound() {
         }
         buttonContainer.removeChild(nrButton);
         outcomeContainer.removeChild(roundOutcomeText);
+        game();
         
     })
     
-    selected = false;
+    
     return('');
 }
 const roundOutcomeText = document.createElement('h1');
@@ -232,3 +270,5 @@ function compGuessMsg() {
         }  
     }
 }
+
+game();
