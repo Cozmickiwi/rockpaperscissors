@@ -301,6 +301,7 @@ function gameEnd(){
     
     const ngButton = document.createElement("button");
     const buttonContainer = document.querySelector('.bottom');
+    ngButton.style.zIndex = "3";
     ngButton.textContent = "Play again?";
     buttonContainer.appendChild(ngButton);
     ngButton.addEventListener('click', () => {
@@ -313,7 +314,6 @@ function kittyAnimation(){
     animationContainer.style.zIndex = "2";
     animation.style.animationPlayState= "running";
     animation.addEventListener("animationend", () => {
-        animationContainer.removeAttribute('class');
         kittyImage.style.display = 'none';
     }) 
 }
