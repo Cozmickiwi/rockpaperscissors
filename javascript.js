@@ -312,7 +312,7 @@ function gameEnd(){
     itemSelection.style.margin = '1vh';
     itemSelection.style.borderRadius = "10px";
     if (playerScore > computerScore) {
-        itemSelection.textContent = `You won the game!! Final results: Player: ${playerScore} | Computer: ${computerScore}`;
+        itemSelection.textContent = `You won the game! Let's go!!! Final results: Player: ${playerScore} | Computer: ${computerScore}`;
         kittyAnimation();
     }
     else if (playerScore < computerScore) {
@@ -339,5 +339,5 @@ function kittyAnimation(){
         kittyImage.style.display = 'none';
     }) 
 }
-
+kittyAnimation();
 game();
